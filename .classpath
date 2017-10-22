@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/work/QiCard/kryonet/kryonet-2.21/kryonet-2.21/jars/production/onejar/kryonet-2.21-all.jar" sourcepath="D:/work/QiCard/kryonet/kryonet-kryonet-2.21.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
