@@ -31,17 +31,8 @@ public class SERVER_TEST {
 				if (object instanceof String) {
 					try {
 						String command = (String) object;
-						JSONObject cmd = (JSONObject) new JSONParser().parse(command);
-
-						if (command.equalsIgnoreCase("Start")) {
-							window.setVisible(true);
-						} else if (command.equalsIgnoreCase("Stop")) {
-							window.setVisible(false);
-						} else if (command.equalsIgnoreCase("hold")) {
-							window.setVisible(false);
-						} else if (command.equalsIgnoreCase("release")) {
-							window.setVisible(false);
-						}
+						//JSONObject cmd = (JSONObject) new JSONParser().parse(command);
+						System.out.println(command);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -49,7 +40,7 @@ public class SERVER_TEST {
 
 			}
 		});
-		server.bind(512, 512);
+		server.bind(1024, 1024);
 		System.out.println("Server Started.....");
 
 	}

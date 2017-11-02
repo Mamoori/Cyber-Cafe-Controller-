@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
 
 import com.esotericsoftware.kryonet.Client;
 
@@ -56,15 +57,12 @@ public class TEST {
 		btnNewButton.setBackground(SystemColor.controlHighlight);
 		ImageIcon img = loadIcon("start.png");
 		btnNewButton.setIcon(img);
-
 		btnNewButton.addActionListener(a -> {
 			String ip = Model.getElementAt(list.getSelectedIndex());
 			try {
-				client.connect(500, ip, 512, 512);
-				client.sendUDP("Start");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				client.connect(500, ip, 1024, 1024);
+				client.sendUDP(CommandSender.instance.send("start", null));
+			} catch (Exception e) {}
 		});
 
 		btnNewButton.addActionListener(new ActionListener() {
@@ -87,11 +85,9 @@ public class TEST {
 			public void actionPerformed(ActionEvent e) {
 				String ip = Model.getElementAt(list.getSelectedIndex());
 				try {
-					client.connect(500, ip, 512, 512);
-					client.sendUDP("Stop");
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
+					client.connect(500, ip, 1024, 1024);
+					client.sendUDP(CommandSender.instance.send("stop", null));
+				} catch (Exception e2) {}
 			}
 		});
 		btnNewButton_1.setBounds(33, 112, 218, 52);
@@ -107,10 +103,9 @@ public class TEST {
 		btnNewButton_2.setBackground(SystemColor.controlHighlight);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				client.discoverHosts(54777, 1000).forEach(host -> {
+				client.discoverHosts(1024, 5000).forEach(host -> {
 					Model.addElement(host.getHostAddress());
 				});
-
 			}
 		});
 		ImageIcon img3 = loadIcon("REFRESH1.png");
@@ -139,14 +134,26 @@ public class TEST {
 		lblNewLabel_2.setBounds(43, 291, 231, 36);
 		frame.getContentPane().add(lblNewLabel_2);
 
-		JButton btnNewButton_3 = new JButton("HOLD PC");
+		JToggleButton holdButton = new JToggleButton("HOLD PC");
+		holdButton.addActionListener(a -> {
+			String ip = Model.getElementAt(list.getSelectedIndex());
+			try {
+				System.out.println(holdButton.isSelected());
+				client.connect(500, ip, 1024, 1024);
+				if (holdButton.isSelected()) {
+					client.sendUDP(CommandSender.instance.send("hold", null));
+				} else {
+					client.sendUDP(CommandSender.instance.send("!hold", null));
+				}
+			} catch (Exception e2) {}
+		});
 		ImageIcon img5 = loadIcon("pause.png");
-		btnNewButton_3.setIcon(img5);
+		holdButton.setIcon(img5);
 
-		btnNewButton_3.setBackground(SystemColor.controlHighlight);
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_3.setBounds(330, 48, 140, 36);
-		frame.getContentPane().add(btnNewButton_3);
+		holdButton.setBackground(SystemColor.controlHighlight);
+		holdButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		holdButton.setBounds(330, 48, 140, 36);
+		frame.getContentPane().add(holdButton);
 
 		JLabel lblCurrentTime = new JLabel("CURRENT TIME:");
 		lblCurrentTime.setFont(new Font("Tahoma", Font.BOLD, 11));
